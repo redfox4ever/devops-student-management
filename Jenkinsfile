@@ -9,7 +9,7 @@ maven 'M2_HOME'
 }
 options {
 
-timeout(time: 5, unit: 'MINUTES')
+timeout(time: 10, unit: 'MINUTES')
 }
 environment {
 APP_ENV = "DEV"
@@ -17,7 +17,7 @@ APP_ENV = "DEV"
 stages {
 stage('Code Checkout') {
 steps {
-git branch: 'master',
+git branch: 'main',
 url: 'https://github.com/redfox4ever/devops-student-management.git',
 credentialsId: 'jenkins-example-github-pat'
 }
