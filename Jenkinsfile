@@ -14,9 +14,14 @@ pipeline {
 
             }
         }
-        stage('MAVEN'){
+        stage('TEST'){
+        steps {
+                 sh "mvn test"
+               }
+        }
+        stage('PACKAGE'){
             steps {
-                sh "mvn package"
+               sh "mvn package"
             }
         }
     }
