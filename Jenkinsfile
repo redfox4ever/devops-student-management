@@ -23,6 +23,25 @@ pipeline {
             steps {
                sh "mvn package"
             }
+        stage('DOCKER-BUILD'){
+            steps {
+               sh "docker build -t student-management:latest ."
+
+            }
+
+        stage('DOCKER-PUSH'){
+            steps {
+
+        sh "docker tag student-management:latest redfox4ever/student-management:latest"
+        sh "docker push redfox4ever/student-management:latest"
+            }
+        }
+        stage('DOCKER-RUN'){
+            steps {
+        // Run the container, mapping port 8080
+        sh "docker run -d -p 8089:8089 --name student-management student-management:latest"
+
+            }
         }
     }
 }

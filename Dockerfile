@@ -1,7 +1,8 @@
-FROM openjdk:17-jdk-alpine
+FROM eclipse-temurin:17-jdk
+
 LABEL authors="redfox"
 WORKDIR /app
-COPY /var/lib/jenkins/workspace/student-management/target/student-management-0.0.1-SNAPSHOT.jar student-management.jar
+COPY target/student-management-0.0.1-SNAPSHOT.jar student-management.jar
 
 RUN apk add --no-cache mariadb mariadb-client
 
