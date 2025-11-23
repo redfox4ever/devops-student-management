@@ -38,7 +38,7 @@ pipeline {
         stage('DOCKER-PUSH') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                    sh "echo $DOCKER_PASS | docker login -u redfox4ever --password-stdin"
                     sh "docker push redfox4ever/student-management-app:latest"
                 }
             }
