@@ -15,19 +15,15 @@ pipeline {
             }
         }
         stage('TEST'){
-        steps {
+            steps {
                  sh "mvn test"
-               }
+            }
         }
         stage('PACKAGE'){
             steps {
                sh "mvn package"
             }
-        stage('DOCKER-BUILD'){
-            steps {
-               sh "docker build -t student-management:latest ."
-
-            }
+        }
 
         stage('DOCKER-BUILD') {
             steps {
