@@ -27,7 +27,7 @@ pipeline {
 
         stage('DOCKER-BUILD') {
             steps {
-                sh "docker compose build"
+                sh "docker build -t student-management-app ."
                 sh "docker tag student-management-app:latest redfox4ever/student-management-app:latest"
             }
         }
@@ -38,12 +38,6 @@ pipeline {
                     sh "echo $DOCKER_PASS | docker login -u redfox4ever --password-stdin"
                     sh "docker push redfox4ever/student-management-app:latest"
                 }
-            }
-        }
-
-        stage('DOCKER-UP') {
-            steps {
-                sh "docker compose up -d"
             }
         }
     }
