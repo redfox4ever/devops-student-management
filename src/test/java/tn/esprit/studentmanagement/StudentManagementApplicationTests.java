@@ -13,6 +13,6 @@ class StudentManagementApplicationTests {
     @Test void dummyTest1() { assertTrue(true); }
     @Test void dummyTest2() { assertEquals(1,1); }
     @Test void dummyTest3() { int sum = 2+3; assertEquals(5,sum);}
-    @Test void dummyTest4() { int sum = 2+3; assertEquals(6,sum);}
+    @Test void dummyTest4() { int sum = 2+3; assertEquals(5,sum);}
 
 }
