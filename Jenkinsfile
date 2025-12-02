@@ -34,6 +34,7 @@ pipeline {
         stage('TEST'){
             steps {
                  sh "mvn test"
+                 sh "mvn jacoco:report"
             }
         }
 
@@ -46,7 +47,7 @@ pipeline {
         stage('QUALITY CHECK') {
             steps {
                 withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_AUTH_TOKEN')]) {
-                    sh "mvn sonar:sonar -Dsonar.projectKey=student-management -Dsonar.host.url=http://localhost:9000 -Dsonar.login=$SONAR_AUTH_TOKEN"
+                    sh "mvn sonar:sonar -Dsonar.projectKey=student-management -Dsonar.host.url=http://localhost:9000 -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"
                 }
 
             }
