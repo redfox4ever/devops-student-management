@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8089/student' // This should be set via environment variable in Kubernetes
+  apiUrl: 'http://192.168.49.2:30080/student'
 };
 
