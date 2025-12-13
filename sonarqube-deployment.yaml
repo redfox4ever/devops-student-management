@@ -39,6 +39,21 @@ spec:
                 secretKeyRef:
                   name: sonar-secret
                   key: password
+          volumeMounts:
+            - name: sonarqube-data
+              mountPath: /opt/sonarqube/data
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "1"
+      volumes:
+        - name: sonarqube-data
+          persistentVolumeClaim:
+            claimName: sonarqube-pvc
+
 ---
 apiVersion: v1
 kind: Service
