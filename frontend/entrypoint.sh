@@ -3,6 +3,9 @@
 # Replace API URL in config.json if environment variable is set
 if [ -n "$API_URL" ]; then
   echo "Setting API URL to: $API_URL"
+  # Replace any existing API URL pattern in config.json
+  sed -i "s|\"apiUrl\":[^,]*|\"apiUrl\": \"$API_URL\"|g" /usr/share/nginx/html/assets/config.json
+  # Also handle the case where it might be the default localhost URL
   sed -i "s|http://localhost:8089/student|$API_URL|g" /usr/share/nginx/html/assets/config.json
 fi
 

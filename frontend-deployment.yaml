@@ -23,8 +23,11 @@ spec:
         - containerPort: 80
           name: http
         env:
+        # API_URL will be replaced in config.json by entrypoint.sh
+        # Using minikube IP and backend NodePort (30080)
+        # Note: For production, use Ingress or LoadBalancer
         - name: API_URL
-          value: "http://spring-service.devops.svc.cluster.local:8089/student"
+          value: "http://192.168.49.2:30080/student"
         resources:
           requests:
             memory: "64Mi"
@@ -62,4 +65,3 @@ spec:
     nodePort: 30081
   selector:
     app: frontend-app
-
