@@ -13,6 +13,13 @@ data:
         static_configs:
           - targets: ['spring-service.devops.svc.cluster.local:8089']
         metrics_path: /student/actuator/prometheus
+      - job_name: 'ubuntu-host'
+        static_configs:
+          - targets: ['192.168.49.1:9100']
+      - job_name: 'jenkins'
+        static_configs:
+          - targets: ['192.168.49.1:8080']
+        metrics_path: /prometheus
 
 ---
 

@@ -80,5 +80,12 @@ pipeline {
                 sh "kubectl apply -f spring-deployment.yaml --namespace=devops"
             }
         }
+        stage('MONITORING-DEPLOYMENT') {
+            steps {
+
+                sh "kubectl apply -f monitoring.yaml -n devops"
+                sh "kubectl rollout restart deployment monitoring -n devops"
+            }
+        }
     }
 }
