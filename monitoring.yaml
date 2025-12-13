@@ -1,4 +1,3 @@
----
 # 1️⃣ Prometheus ConfigMap
 apiVersion: v1
 kind: ConfigMap
@@ -11,21 +10,28 @@ data:
       scrape_interval: 15s
     scrape_configs:
       - job_name: 'spring-app'
-        kubernetes_sd_configs:
-          - role: pod
-        relabel_configs:
-          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-            action: keep
-            regex: true
-          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-            target_label: __metrics_path__
-          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_port]
-            target_label: __address__
-            regex: (.+)
-            replacement: $1
+        static_configs:
+          - targets: ['spring-service.devops.svc.cluster.local:8089']
+        metrics_path: /student/actuator/prometheus
 
 ---
-# 2️⃣ Monitoring Deployment (Prometheus + Grafana)
+
+# 2️⃣ PersistentVolumeClaim for Grafana
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-pvc
+  namespace: devops
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+# 3️⃣ Monitoring Deployment (Prometheus + Grafana)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -59,14 +65,21 @@ spec:
           env:
             - name: GF_SECURITY_ADMIN_PASSWORD
               value: "admin"
+          volumeMounts:
+            - name: grafana-storage
+              mountPath: /var/lib/grafana
 
       volumes:
         - name: prometheus-config-volume
           configMap:
             name: prometheus-config
+        - name: grafana-storage
+          persistentVolumeClaim:
+            claimName: grafana-pvc
 
 ---
-# 3️⃣ Service for Prometheus
+
+# 4️⃣ Service for Prometheus
 apiVersion: v1
 kind: Service
 metadata:
@@ -82,7 +95,8 @@ spec:
   type: NodePort
 
 ---
-# 4️⃣ Service for Grafana
+
+# 5️⃣ Service for Grafana
 apiVersion: v1
 kind: Service
 metadata:
